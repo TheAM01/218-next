@@ -2,7 +2,7 @@
 
 
 import { Product } from "@/types/product";
-import { Stars } from "./Stars";
+import { Stars } from "@/components/cards/Stars";
 import { averageStars } from "@/utils/product-utils";
 
 interface ProductDetailProps {

@@ -3,7 +3,7 @@ import ProductDetail from "@/components/cards/ProductDetail";
 import { products } from "@/lib/products";
 
 
-// http://localhost:3000/products/[productId]/reviews/[reviewId]
+// searchParams
 
 export default async function ProductPage({ params }: { params: Promise<{ productId: string; }> }) {
 

@@ -1,7 +1,7 @@
 import { Product } from "@/types/product";
 import Link from "next/link";
-import { Stars } from "./Stars";
 import { averageStars } from "@/utils/product-utils";
+import { Stars } from "@/components/cards/Stars";
 
 interface ProductCardProps {
     product: Product;
