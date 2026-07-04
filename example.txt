@@ -1,0 +1,3 @@
+https://store.com/ -> app/page.tsx
+https://store.com/products -> app/products/page.tsx
+https://store.com/products/keyboard-x4 -> app/products/[productId]/page.tsx
