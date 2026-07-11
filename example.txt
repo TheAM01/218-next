@@ -1,3 +1,24 @@
-https://store.com/ -> app/page.tsx
-https://store.com/products -> app/products/page.tsx
-https://store.com/products/keyboard-x4 -> app/products/[productId]/page.tsx
+database (resources)
+- products
+- reviews
+- collections/categories
+- users
+- admins
+
+
+CRUD Operations:
+- Create -> POST
+- Read -> GET
+- Update -> PUT/PATCH
+- Delete -> DELETE
+
+
+RESTful API:
+Representational State Transfer
+
+GET /api/products: All products
+POST /api/products, JSON{productDetails}: Create a product
+
+GET /api/products/[productId]: Details of product with matching ID
+PATCH/PUT /api/products/[productId], JSON{productDetails}: Update product with matching ID
+DELETE /api/products/[productId]: Delete product with matching ID
