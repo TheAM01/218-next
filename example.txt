@@ -22,3 +22,43 @@ POST /api/products, JSON{productDetails}: Create a product
 GET /api/products/[productId]: Details of product with matching ID
 PATCH/PUT /api/products/[productId], JSON{productDetails}: Update product with matching ID
 DELETE /api/products/[productId]: Delete product with matching ID
+
+
+PUT
+{
+    id: "keyboard-x1",
+    title: "Keyboard X1",
+    brand: "XYZ Electronics",
+    boxContent: ["Keyboard", "Bluetooth Connector", "Charger"],
+    price: 80,
+    image: "https://placehold.co/500/000000/FFFFFF",
+    reviews: [
+        {
+            author: "John Doe",
+            stars: 4,
+            comment: "Great keyboard for long sessions",
+        },
+        {
+            author: "Jane Doe",
+            stars: 3,
+            comment: "RGB isn't that good and there is a minor input delay",
+        },
+    ],
+},
+
+PATCH
+{
+    price: 80,
+    reviews: [
+        {
+            author: "John Doe",
+            stars: 4,
+            comment: "Great keyboard for long sessions",
+        },
+        {
+            author: "Jane Doe",
+            stars: 3,
+            comment: "RGB isn't that good and there is a minor input delay",
+        },
+    ],
+},

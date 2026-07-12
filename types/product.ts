@@ -8,6 +8,7 @@ export interface Product {
     reviews: Review[];
 }
 
+
 export interface Review {
     author: string;
     stars: number;
