@@ -8,12 +8,18 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-    const body: Product = await req.json();
-
-    LLMResponse.push(body);
-
     return NextResponse.json(
-        { message: "Successfully added product" },
-        { status: 201 }
-    );
+        { message: "building"},
+        { status: 501 }
+    )
 }
+// export async function POST(req: NextRequest) {
+//     const body: Product = await req.json();
+
+//     LLMResponse.push(body);
+
+//     return NextResponse.json(
+//         { message: "Successfully added product" },
+//         { status: 201 }
+//     );
+// }
