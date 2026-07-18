@@ -1,5 +1,4 @@
 import clientPromise from "@/lib/db";
-import { Product } from "@/types/product";
 import { NextResponse } from "next/server";
 
 
