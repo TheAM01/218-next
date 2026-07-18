@@ -15,7 +15,7 @@ export default async function AllProductsPage({ searchParams }: { searchParams: 
     const { order, sort, brand, q } = await searchParams;
 
 
-    const res = await fetch("http://localhost:3001/api/products", {
+    const res = await fetch("http://localhost:3000/api/products", {
         method: "GET"
     });
     const products: Product[] = await res.json();
