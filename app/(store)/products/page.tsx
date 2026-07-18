@@ -15,10 +15,10 @@ export default async function AllProductsPage({ searchParams }: { searchParams: 
     const { order, sort, brand, q } = await searchParams;
 
 
-    const res = await fetch("http://localhost:3000/api/products", {
+    const res = await fetch("https://218-next.vercel.app/api/products", {
         method: "GET"
     });
-    const products: Product[] = await res.json();
+    const {data: products}: { data: Product[] } = await res.json();
     let filteredProducts = products;
 
     if (q) {
