@@ -49,13 +49,7 @@ export async function POST(req: NextRequest) {
     }
 
 }
-// export async function POST(req: NextRequest) {
-//     const body: Product = await req.json();
 
-//     LLMResponse.push(body);
 
-//     return NextResponse.json(
-//         { message: "Successfully added product" },
-//         { status: 201 }
-//     );
-// }
+// ObjectId (_id)
+//
