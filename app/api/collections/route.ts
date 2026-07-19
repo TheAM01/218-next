@@ -1,5 +1,5 @@
 import clientPromise from "@/lib/db";
-import { Product } from "@/types/product";
+import { Collection } from "@/types/collection";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
@@ -7,12 +7,12 @@ export async function GET() {
         const dbName = process.env.DB_NAME;
         const client = await clientPromise;
         const database = client.db(dbName);
-        const products = database.collection("products");
+        const collections = database.collection("collections");
 
-        const allProducts = await products.find({}).toArray();
+        const allCollections = await collections.find({}).toArray();
 
         return NextResponse.json(
-            { data: allProducts }
+            { data: allCollections }
         );
     } catch (e) {
         console.log(e);
@@ -27,19 +27,17 @@ export async function POST(req: NextRequest) {
     try {
         const dbName = process.env.DB_NAME;
 
-        const body: Product = await req.json();
-
-        console.log(body);
+        const body: Collection = await req.json();
 
         const client = await clientPromise;
         const database = client.db(dbName);
-        const products = database.collection("products");
+        const collections = database.collection("collections");
 
-        const newProduct = await products.insertOne(body);
+        const newCollection = await collections.insertOne(body);
 
 
         return NextResponse.json(
-            { created: newProduct },
+            { created: newCollection },
             { status: 201 }
         )
     } catch (e) {
@@ -51,7 +49,3 @@ export async function POST(req: NextRequest) {
     }
 
 }
-
-
-// ObjectId (_id)
-//

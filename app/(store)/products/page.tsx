@@ -15,7 +15,7 @@ export default async function AllProductsPage({ searchParams }: { searchParams: 
     const { order, sort, brand, q } = await searchParams;
 
 
-    const res = await fetch("https://218-next.vercel.app/api/products", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`, {
         method: "GET"
     });
     const {data: products}: { data: Product[] } = await res.json();
