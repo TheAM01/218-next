@@ -2,7 +2,9 @@
 
 import { Product } from "@/types/product";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { revalidateProducts } from "./actions";
 
 interface ProductFormData {
     id: string,
@@ -14,6 +16,8 @@ interface ProductFormData {
 }
 
 export default function ProductDashboardClient({ products }: { products: Product[] }) {
+
+    const router = useRouter();
 
     const [showForm, setShowForm] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
@@ -66,6 +70,10 @@ export default function ProductDashboardClient({ products }: { products: Product
             if (!res.ok) {
                 throw new Error("There was an error while creating the product");
             }
+
+            // revalidate the products list so the new product shows up
+            await revalidateProducts();
+            router.refresh();
 
             // reset form + close on success
             setFormData({

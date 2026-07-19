@@ -8,6 +8,7 @@ export function Navigation() {
                 <Link className="text-neutral-500 hover:underline hover:text-black duration-500" href="/">Home</Link>
                 <Link className="text-neutral-500 hover:underline hover:text-black duration-500" href="/about">About</Link>
                 <Link className="text-neutral-500 hover:underline hover:text-black duration-500" href="/products">Products</Link>
+                <Link className="text-neutral-500 hover:underline hover:text-black duration-500" href="/dashboard/products">Dashboard</Link>
                 <Link className="text-neutral-500 hover:underline hover:text-black duration-500" href="/contact/admin">Contact Admin</Link>
                 <Link className="text-neutral-500 hover:underline hover:text-black duration-500" href="/contact/support">Contact Support</Link>
                 <Link className="text-neutral-500 hover:underline hover:text-black duration-500" href="/contact-us">Contact Us</Link>
