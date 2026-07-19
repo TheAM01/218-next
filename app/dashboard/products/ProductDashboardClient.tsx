@@ -1,6 +1,7 @@
 "use client";
 
 import { Product } from "@/types/product";
+import { Loader2 } from "lucide-react";
 import { useState } from "react";
 
 interface ProductFormData {
@@ -15,6 +16,8 @@ interface ProductFormData {
 export default function ProductDashboardClient({ products }: { products: Product[] }) {
 
     const [showForm, setShowForm] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
 
     const [formData, setFormData] = useState<ProductFormData>({
         id: "",
@@ -35,6 +38,9 @@ export default function ProductDashboardClient({ products }: { products: Product
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        setError(null);
+        setLoading(true);
+
         const newProduct: Product = {
             id: formData.id,
             title: formData.title,
@@ -48,20 +54,36 @@ export default function ProductDashboardClient({ products }: { products: Product
             reviews: []
         };
 
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newProduct)
+            });
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newProduct)
-        });
+            if (!res.ok) {
+                throw new Error("There was an error while creating the product");
+            }
 
-        if (!res.ok) {
-            console.error("There was an error while creating the product");
+            // reset form + close on success
+            setFormData({
+                id: "",
+                title: "",
+                brand: "",
+                price: "",
+                boxContent: "",
+                image: "",
+            });
+            setShowForm(false);
+        } catch (err) {
+            setError(
+                err instanceof Error ? err.message : "Something went wrong. Please try again."
+            );
+        } finally {
+            setLoading(false);
         }
-
-
     };
 
     return (
@@ -75,6 +97,19 @@ export default function ProductDashboardClient({ products }: { products: Product
                     {showForm ? "Close form" : "Add New +"}
                 </button>
             </div>
+
+            {error && (
+                <div className="mb-4 rounded-md border border-red-200 bg-red-50 px-4 py-2 text-sm text-red-700">
+                    {error}
+                </div>
+            )}
+
+            {loading && (
+                <div className="flex gap-2 items-center mb-4">
+                    <Loader2 className="animate-spin"/>
+                    <span className="text-xl">Adding {formData.title}...</span>
+                </div>
+            )}
 
             {showForm &&
                 <NewProductForm
