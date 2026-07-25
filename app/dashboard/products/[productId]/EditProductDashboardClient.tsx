@@ -1,11 +1,9 @@
 "use client";
 
 import { Product } from "@/types/product";
-import { Loader2, Pencil, Trash } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { revalidateProducts } from "./actions";
-import Link from "next/link";
 
 interface ProductFormData {
     id: string,
@@ -16,7 +14,7 @@ interface ProductFormData {
     image: string,
 }
 
-export default function ProductDashboardClient({ products }: { products: Product[] }) {
+export default function ProductDashboardClient({ product }: { product: Product }) {
 
     const router = useRouter();
 
@@ -25,12 +23,12 @@ export default function ProductDashboardClient({ products }: { products: Product
     const [error, setError] = useState<string | null>(null);
 
     const [formData, setFormData] = useState<ProductFormData>({
-        id: "",
-        title: "",
-        brand: "",
-        price: "",
-        boxContent: "",
-        image: "",
+        id: product.id,
+        title: product.title,
+        brand: product.brand,
+        price: product.price.toString(),
+        boxContent: product.boxContent.join(", "),
+        image: product.image,
     });
 
     const handleChange = (
@@ -60,8 +58,8 @@ export default function ProductDashboardClient({ products }: { products: Product
         };
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`, {
-                method: "POST",
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/${product.id}`, {
+                method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -73,7 +71,7 @@ export default function ProductDashboardClient({ products }: { products: Product
             }
 
             // revalidate the products list so the new product shows up
-            await revalidateProducts();
+            // await revalidateProducts();
             router.refresh();
 
             // reset form + close on success
@@ -115,131 +113,29 @@ export default function ProductDashboardClient({ products }: { products: Product
 
             {loading && (
                 <div className="flex gap-2 items-center mb-4">
-                    <Loader2 className="animate-spin" />
+                    <Loader2 className="animate-spin"/>
                     <span className="text-xl">Adding {formData.title}...</span>
                 </div>
             )}
 
-            {showForm &&
-                <NewProductForm
-                    formData={formData}
-                    handleChange={handleChange}
-                    handleSubmit={handleSubmit}
-                />
-            }
-
-            <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
-                <ProductsTable products={products} />
-            </div>
+            
+            <NewProductForm
+                formData={formData}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+            />
+            
         </section>
     );
 }
 
-function ProductsTable({ products }: { products: Product[] }) {
-
-    const handleDelete = async (id: string) => {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/${id}`, {
-            method: "DELETE",
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
-
-        if (!res.ok) {
-            throw new Error("There was an error while creating the product");
-        }
-    }
-    return (
-        <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-                <tr>
-                    <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-                        Image
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-                        Title
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-                        Brand
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-                        Price
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-                        Box Content
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-                        Reviews
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-                        Action
-                    </th>
-                </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100 bg-white">
-                {products.map((product) => (
-                    <tr key={product.id} className="hover:bg-gray-50">
-                        <td className="whitespace-nowrap px-4 py-3">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                                src={product.image}
-                                alt={product.title}
-                                className="h-12 w-12 rounded-md object-cover"
-                            />
-                        </td>
-                        <td className="px-4 py-3 text-sm font-medium text-gray-900">
-                            {product.title}
-                        </td>
-                        <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-600">
-                            {product.brand}
-                        </td>
-                        <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-900">
-                            ${product.price.toFixed(2)}
-                        </td>
-                        <td className="px-4 py-3 text-sm text-gray-600">
-                            <ul className="list-inside list-disc space-y-0.5">
-                                {product.boxContent.map((item, idx) => (
-                                    <li key={idx}>{item}</li>
-                                ))}
-                            </ul>
-                        </td>
-                        <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-600">
-                            {product.reviews.length}
-                        </td>
-                        <td className="px-4 py-3 whitespace-nowrap text-sm flex">
-                            <Link
-                                href={`/dashboard/products/${product.id}`}
-                                className="bg-black rounded-md text-white p-2"
-                            >
-                                <Pencil size={12} />
-                            </Link>
-                            <button
-                                onClick={() => handleDelete(product.id)}
-                                className="bg-red-500 rounded-md text-white p-2"
-                            >
-                                <Trash size={12} />
-                            </button>
-                        </td>
-                    </tr>
-                ))}
-                {products.length === 0 && (
-                    <tr>
-                        <td colSpan={6} className="px-4 py-6 text-center text-sm text-gray-400">
-                            No products found.
-                        </td>
-                    </tr>
-                )}
-            </tbody>
-        </table>
-    )
-}
 
 function NewProductForm({
     formData, handleChange, handleSubmit
 }: {
     formData: ProductFormData; handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void; handleSubmit: (e: React.FormEvent) => void;
 }) {
-
+    
 
     return (
         <form
