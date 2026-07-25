@@ -1,3 +1,5 @@
+import { createUser } from "@/actions/auth";
+
 export default function SignupPage() {
     return (
         <div className="flex min-h-screen items-center justify-center bg-neutral-50 px-4">
@@ -11,7 +13,7 @@ export default function SignupPage() {
                     </p>
                 </div>
 
-                <div className="space-y-4">
+                <form action={createUser} className="space-y-4">
                     <div className="space-y-2">
                         <label
                             htmlFor="name"
@@ -20,6 +22,7 @@ export default function SignupPage() {
                             Full name
                         </label>
                         <input
+                            name="fullName"
                             id="name"
                             type="text"
                             placeholder="John Doe"
@@ -35,6 +38,7 @@ export default function SignupPage() {
                             Email
                         </label>
                         <input
+                            name="email"
                             id="email"
                             type="email"
                             placeholder="name@example.com"
@@ -50,6 +54,7 @@ export default function SignupPage() {
                             Password
                         </label>
                         <input
+                            name="password"
                             id="password"
                             type="password"
                             placeholder="••••••••"
@@ -58,12 +63,12 @@ export default function SignupPage() {
                     </div>
 
                     <button
-                        type="button"
+                        type="submit"
                         className="inline-flex h-10 w-full items-center justify-center rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-2"
                     >
                         Create account
                     </button>
-                </div>
+                </form>
 
                 <div className="relative">
                     <div className="absolute inset-0 flex items-center">
