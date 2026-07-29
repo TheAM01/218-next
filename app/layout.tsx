@@ -13,6 +13,13 @@ const geistMono = Geist_Mono({
     subsets: ["latin"],
 });
 
+export const metadata: Metadata = {
+    title: {
+        default: "218Next",
+        template: "%s - 218Next - E-Commerce Store"
+    }
+}
+
 
 export default function Ffyebuyfbveuvbsufevu({
     children,

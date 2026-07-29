@@ -1,11 +1,29 @@
 // import ProductCard from "@/components/cards/ProductCard";
 import ProductDetail from "@/components/cards/ProductDetail";
 import { products } from "@/lib/products";
+import { Metadata } from "next";
+
+interface ProductDetailsPageProps {
+    params: Promise<{
+        productId: string;
+    }>
+}
+
+export async function generateMetadata({ params }: ProductDetailsPageProps): Promise<Metadata> {
+    const { productId } = await params;
+
+    const product = products.find(p => p.id === productId);
+
+    return {
+        title: {
+            absolute: `Buy ${product?.title}`
+        },
+    }
+}
 
 
-// searchParams
 
-export default async function ProductPage({ params }: { params: Promise<{ productId: string; }> }) {
+export default async function ProductDetailsPage({ params }: ProductDetailsPageProps) {
 
     const { productId } = await params;
 

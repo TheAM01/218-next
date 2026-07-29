@@ -1,6 +1,6 @@
 import ProductGrid from "@/components/cards/ProductGrid";
 import { Product } from "@/types/product";
-// import { products } from "@/lib/products";
+import { products } from "@/lib/products";
 
 
 interface QueryParams {
@@ -15,10 +15,10 @@ export default async function AllProductsPage({ searchParams }: { searchParams: 
     const { order, sort, brand, q } = await searchParams;
 
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`, {
-        method: "GET"
-    });
-    const {data: products}: { data: Product[] } = await res.json();
+    // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`, {
+    //     method: "GET"
+    // });
+    // const {data: products}: { data: Product[] } = await res.json();
     let filteredProducts = products;
 
     if (q) {
