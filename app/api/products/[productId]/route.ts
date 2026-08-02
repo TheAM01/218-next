@@ -5,14 +5,16 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request, { params }: { params: Promise<{ productId: string; }> }) {
     try {
-        const dbName = process.env.DB_NAME;
-        const client = await clientPromise;
-        const database = client.db(dbName);
-        const products = database.collection("products");
-
         const { productId } = await params;
 
-        const product = await products.findOne({ id: productId });
+        const res = await fetch(`${process.env.BACKEND_URI!}/api/products/${productId}`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'x-api-key': process.env.BACKEND_API_KEY!
+            },
+        });
+        const product = await res.json();
 
         if (!product) {
             return NextResponse.json(

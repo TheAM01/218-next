@@ -3,6 +3,12 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/layout/Navigation";
 
+
+import dns from "dns";
+
+// MongoDB Atlas uses mongodb+srv:// which requires SRV/TXT DNS lookups.
+// Some local/ISP resolvers fail these, causing ECONNREFUSED — force public DNS.
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
 const geistSans = Geist({
     variable: "--font-geist-sans",
     subsets: ["latin"],

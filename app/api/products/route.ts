@@ -4,15 +4,17 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
     try {
-        const dbName = process.env.DB_NAME;
-        const client = await clientPromise;
-        const database = client.db(dbName);
-        const products = database.collection("products");
-
-        const allProducts = await products.find({}).toArray();
+        const res = await fetch(`${process.env.BACKEND_URI!}/api/products`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'x-api-key': process.env.BACKEND_API_KEY!
+            }
+        });
+        const products = await res.json();
 
         return NextResponse.json(
-            { data: allProducts }
+            { data: products }
         );
     } catch (e) {
         console.log(e);
@@ -25,21 +27,31 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
     try {
-        const dbName = process.env.DB_NAME;
 
         const body: Product = await req.json();
 
         console.log(body);
 
-        const client = await clientPromise;
-        const database = client.db(dbName);
-        const products = database.collection("products");
+        const res = await fetch(`${process.env.BACKEND_URI!}/api/products`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'x-api-key': process.env.BACKEND_API_KEY!
+            },
+            body: JSON.stringify(body),
+        });
 
-        const newProduct = await products.insertOne(body);
+        if (!res.ok) {
+            return NextResponse.json(
+                { message: "We ran into an error!" },
+                { status: 500 }
+            )
+        }
 
+        const createdProduct = await res.json();
 
         return NextResponse.json(
-            { created: newProduct },
+            { created: createdProduct.product },
             { status: 201 }
         )
     } catch (e) {

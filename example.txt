@@ -72,3 +72,16 @@ TODO:
     fetch requests from UI,
     server actions
 }
+
+
+
+
+
+
+
+
+
+CORS: Cross Origin Resource Sharing
+
+Backend Origin:  http://localhost:8000
+Frontend Origin: http://localhost:3000
