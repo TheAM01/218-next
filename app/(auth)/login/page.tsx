@@ -1,3 +1,5 @@
+import { login } from "@/actions/auth";
+
 export default function LoginPage() {
     return (
         <div className="flex min-h-screen items-center justify-center bg-neutral-50 px-4">
@@ -11,18 +13,19 @@ export default function LoginPage() {
                     </p>
                 </div>
 
-                <div className="space-y-4">
+                <form action={login} className="space-y-4">
                     <div className="space-y-2">
                         <label
-                            htmlFor="email"
+                            htmlFor="username"
                             className="text-sm font-medium leading-none text-neutral-900"
                         >
-                            Email
+                            Username
                         </label>
                         <input
-                            id="email"
-                            type="email"
-                            placeholder="name@example.com"
+                            id="username"
+                            type="text"
+                            name="username"
+                            placeholder="Your Username"
                             className="flex h-10 w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-2"
                         />
                     </div>
@@ -45,18 +48,19 @@ export default function LoginPage() {
                         <input
                             id="password"
                             type="password"
+                            name="password"
                             placeholder="••••••••"
                             className="flex h-10 w-full rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-2"
                         />
                     </div>
 
                     <button
-                        type="button"
+                        type="submit"
                         className="inline-flex h-10 w-full items-center justify-center rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-2"
                     >
                         Sign in
                     </button>
-                </div>
+                </form>
 
                 <div className="relative">
                     <div className="absolute inset-0 flex items-center">
