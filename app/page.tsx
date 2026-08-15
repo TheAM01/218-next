@@ -1,3 +1,4 @@
+import UserCard from "@/components/cards/UserCard";
 import { User } from "@/types/user";
 import { Metadata } from "next";
 
@@ -14,7 +15,6 @@ export const metadata: Metadata = {
 export default async function HomePage() {
 
     const res = await fetch("https://jsonplaceholder.typicode.com/users");
-    await wait(5000);
     // throw new Error("page was manually crashed!")
     const users: User[] = await res.json();
 
@@ -22,7 +22,7 @@ export default async function HomePage() {
         <main>
             <div>
                 {users.map((u) => (
-                    <div key={u.id}>{u.name}</div>
+                    <UserCard user={u} key={u.id} />
                 ))}
             </div>
         </main>
