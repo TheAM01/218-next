@@ -1,6 +1,0 @@
-https://www.google.com/search?q=react
-
-&oq=react&gs_lcrp=abcdefg&sourceid=chrome&ie=UTF-8
-
-
-https://examplestore.com/products?sort=price&order=asc&brand=dy
