@@ -1,5 +1,3 @@
-"use client";
-
 import UserCard from "@/components/cards/UserCard";
 import { User } from "@/types/user";
 import { Metadata } from "next";
