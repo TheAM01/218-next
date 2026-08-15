@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/layout/Navigation";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next"
+
 
 
 const inter = Inter({
@@ -41,6 +44,8 @@ export default function RootLayout({
                 <Navigation />
                 {children}
                 {/*<div className="flex justify-center">Copyright John Doe 2026</div>*/}
+                <Analytics />
+                <SpeedInsights />
             </body>
         </html>
     );
